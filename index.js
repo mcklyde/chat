@@ -2,6 +2,15 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+function room(id) {
+	this.id = id;
+	this.users = 1;
+}
+
+var roomLimit = 5;
+var rooms = [];
+var roomExists = false;
+
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/html/index.html');
 });
@@ -13,10 +22,26 @@ io.on('connection', function(socket){
 	});
 
     socket.on('room', function(roomid) {
-        socket.join(roomid, function() {
-            console.log(socket.id + ' has joined a room ' + roomid);
-            io.to('roomid', 'a new user has joined');
-        });
+				for (i = 0; i < rooms.length; i++) {
+					if (rooms[i].id == roomid) {
+						roomExists = true;
+						if (rooms[i].users < roomLimit) {
+							rooms[i].users++;
+							socket.join(roomid);
+						}
+						else {
+							socket.emit('joinFailed', "room is full");
+							console.log('room ' + roomid + ' is full');
+						}
+
+					}
+				}
+				if (!roomExists) {
+					rooms.push(new room(roomid))
+					socket.join(roomid);
+				}
+				roomExists = false;
+				console.log(rooms[0].users);
 
     });
     socket.on('chat message', function(data){

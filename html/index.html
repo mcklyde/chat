@@ -13,6 +13,12 @@
           socket.emit('chat message', username + ' has connected');
           socket.emit('room', roomid);
       });
+
+      socket.on('joinFailed', function(msg) {
+        roomid = prompt(msg, "");
+        socket.emit('room', roomid);
+      })
+
       $('form').submit(function(){
         socket.emit('chat message', {
           roomId : roomid,
