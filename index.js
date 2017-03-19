@@ -11,9 +11,16 @@ io.on('connection', function(socket){
 	socket.on('disconnect', function(){
 		console.log('User ' + socket.id + ' disconnected');
 	});
+	socket.on('room', function(roomid) {
+		socket.join(roomid, function() {
+			console.log(socket.id + ' has joined a room ' + roomid);
+			socket.to(roomid).emit('chat message', 'a new user has joined');
+		});	
 	socket.on('chat message', function(msg, username){
-		io.emit('chat message', msg);
-	});
+		io.in(roomid).emit('chat message', msg);
+		});
+	});		
+	
 });
 
 http.listen(3000, function(){

@@ -7,9 +7,11 @@
 <script>
   $(function () {
     var username = prompt("insert username", "");
+	var roomid = prompt("room id?");
     var socket = io();
 	socket.on('connect', function(client) {
 		socket.emit('chat message', username + ' has connected');
+		socket.emit('room', roomid);
 	});
     $('form').submit(function(){
       socket.emit('chat message', "[" + username + "] " + $('#m').val());
