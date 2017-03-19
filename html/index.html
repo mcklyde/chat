@@ -4,7 +4,6 @@
     <title>chat</title>
     <script src="/socket.io/socket.io.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<<<<<<< HEAD
   <script>
     $(function () {
       var username = prompt("insert username", "");
@@ -25,24 +24,9 @@
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
-=======
-<script>
-  $(function () {
-    var username = prompt("insert username", "");
-	var roomid = prompt("room id?");
-    var socket = io();
-	socket.on('connect', function(client) {
-		socket.emit('chat message', username + ' has connected');
-		socket.emit('room', roomid);
-	});
-    $('form').submit(function(){
-      socket.emit('chat message', "[" + username + "] " + $('#m').val());
-      $('#m').val('');
-      return false;
->>>>>>> d3c30e7a0676bac57e7669102bf5e89a691910c3
     });
-  </script>
-    <style>
+    </script>
+<style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
       form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
