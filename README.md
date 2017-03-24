@@ -1,4 +1,5 @@
-<H1> Instructions - How to run </H1>
-Download nodejs, and it's modules: Express, socket.io
-run the server by doing
-nodejs index.js 
+Instructions in running
+---------------------------
+git clone the repository
+inside the repository do: npm install
+run: nodejs index.js
